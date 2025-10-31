@@ -12,6 +12,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.block.Chest;
+import org.bukkit.block.DoubleChest;
 import org.bukkit.block.Barrel;
 import org.bukkit.block.ShulkerBox;
 import org.bukkit.block.Hopper;
@@ -90,6 +91,7 @@ public class EventListener implements Listener {
 
         // Разрешенные контейнеры
         if (holder instanceof Chest ||
+            holder instanceof DoubleChest ||
             holder instanceof Barrel ||
             holder instanceof ShulkerBox ||
             holder instanceof Hopper ||
@@ -98,8 +100,9 @@ public class EventListener implements Listener {
             return true;
         }
 
-        // Эндерсундук
-        if (inventory.getType() == InventoryType.ENDER_CHEST) {
+        InventoryType type = inventory.getType();
+        if (type == InventoryType.ENDER_CHEST
+            || type == InventoryType.SHULKER_BOX) {
             return true;
         }
 

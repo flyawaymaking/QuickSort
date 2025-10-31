@@ -4,6 +4,7 @@ import java.util.*;
 
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.potion.PotionType;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
@@ -248,7 +249,14 @@ public class SortManager {
             }
             // Если оба не в порядке или порядок одинаковый - сравниваем дальше
 
-            // Если тип одинаковый, то по названию эффекта
+            // Сначала по наличию эффекта (с эффектами выше, без эффектов - ниже)
+            boolean hasEffect1 = hasPotionEffect(item1);
+            boolean hasEffect2 = hasPotionEffect(item2);
+            if (hasEffect1 != hasEffect2) {
+                return Boolean.compare(hasEffect2, hasEffect1); // true идет первым
+            }
+
+            // Если оба с эффектами или оба без эффектов, то по названию эффекта
             String effect1 = getPotionEffectName(item1);
             String effect2 = getPotionEffectName(item2);
             int effectCompare = effect1.compareTo(effect2);
@@ -275,6 +283,36 @@ public class SortManager {
             // Если все одинаково, то по количеству (убывание)
             return Integer.compare(item2.getAmount(), item1.getAmount());
         });
+    }
+
+    private boolean hasPotionEffect(ItemStack potion) {
+        if (!(potion.getItemMeta() instanceof org.bukkit.inventory.meta.PotionMeta meta)) {
+            return false;
+        }
+
+        // Если есть кастомные эффекты — точно есть эффект
+        if (meta.hasCustomEffects()) {
+            return true;
+        }
+
+        // Проверяем базовый тип зелья
+        if (meta.getBasePotionData() != null) {
+            PotionType type = meta.getBasePotionData().getType();
+            if (type == null) return false;
+
+            // Безэффектные типы — всегда false
+            switch (type) {
+                case PotionType.WATER:
+                case PotionType.MUNDANE:
+                case PotionType.THICK:
+                case PotionType.AWKWARD:
+                    return false;
+                default:
+                    return true;
+            }
+        }
+
+        return false;
     }
 
     private String getPotionEffectName(ItemStack potion) {
