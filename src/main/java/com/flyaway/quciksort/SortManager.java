@@ -4,7 +4,6 @@ import java.util.*;
 
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
-import org.bukkit.potion.PotionType;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
@@ -132,6 +131,7 @@ public class SortManager {
         sortCategoryByOrder(categorizedItems.get(Category.ORES), categoryManager.getOreOrder());
         sortCategoryByOrder(categorizedItems.get(Category.FOOD), categoryManager.getFoodOrder());
         sortCategoryByOrder(categorizedItems.get(Category.BLOCKS), categoryManager.getBlocksOrder());
+        sortCategoryByOrder(categorizedItems.get(Category.DECOR), categoryManager.getDecorativeBlocksOrder());
         sortCategoryByOrder(categorizedItems.get(Category.REDSTONE), categoryManager.getRedstoneOrder());
         sortCategoryByOrder(categorizedItems.get(Category.BREWING), categoryManager.getBrewingOrder());
         sortCategoryByOrder(categorizedItems.get(Category.FARMING), categoryManager.getFarmingOrder());
@@ -295,34 +295,35 @@ public class SortManager {
             return true;
         }
 
-        // Проверяем базовый тип зелья
-        if (meta.getBasePotionData() != null) {
-            PotionType type = meta.getBasePotionData().getType();
-            if (type == null) return false;
+        // Новый способ проверки базового типа зелья
+        org.bukkit.potion.PotionType potionType = meta.getBasePotionType();
+        if (potionType == null) return false;
 
-            // Безэффектные типы — всегда false
-            switch (type) {
-                case PotionType.WATER:
-                case PotionType.MUNDANE:
-                case PotionType.THICK:
-                case PotionType.AWKWARD:
-                    return false;
-                default:
-                    return true;
-            }
+        // Безэффектные типы — всегда false
+        return !isEffectlessPotion(potionType);
+    }
+
+    private boolean isEffectlessPotion(org.bukkit.potion.PotionType potionType) {
+        switch (potionType) {
+            case WATER:
+            case MUNDANE:
+            case THICK:
+            case AWKWARD:
+                return true;
+            default:
+                return false;
         }
-
-        return false;
     }
 
     private String getPotionEffectName(ItemStack potion) {
-        if (potion.getItemMeta() instanceof org.bukkit.inventory.meta.PotionMeta) {
-            org.bukkit.inventory.meta.PotionMeta meta = (org.bukkit.inventory.meta.PotionMeta) potion.getItemMeta();
+        if (potion.getItemMeta() instanceof org.bukkit.inventory.meta.PotionMeta meta) {
             if (meta.hasCustomEffects()) {
                 return meta.getCustomEffects().get(0).getType().getName();
             }
-            if (meta.getBasePotionData() != null) {
-                return meta.getBasePotionData().getType().name();
+            // Новый способ получения типа зелья
+            org.bukkit.potion.PotionType potionType = meta.getBasePotionType();
+            if (potionType != null) {
+                return potionType.name();
             }
         }
         return potion.getType().name();

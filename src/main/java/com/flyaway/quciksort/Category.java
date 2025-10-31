@@ -7,6 +7,7 @@ public enum Category {
     ORES,
     FOOD,
     BLOCKS,
+    DECOR,
     REDSTONE,
     BREWING,
     FARMING,
