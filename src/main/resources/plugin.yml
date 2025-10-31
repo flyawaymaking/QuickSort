@@ -1,0 +1,12 @@
+name: QuickSort
+version: 1.0.0
+main: com.flyaway.quicksort.QuickSort
+api-version: 1.21
+description: Плагин для сортировки инвентаря по ПКМ+SHIFT
+author: FlyAwayMaking
+website: https://github.com/flyawaymaking
+
+permissions:
+  quicksort.sort:
+    description: Право сортировки инвентаря
+    default: true
