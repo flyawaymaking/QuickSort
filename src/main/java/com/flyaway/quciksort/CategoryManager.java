@@ -57,6 +57,7 @@ public class CategoryManager {
         toolOrder.add(Material.MANGROVE_BOAT);
         toolOrder.add(Material.CHERRY_BOAT);
         toolOrder.add(Material.BAMBOO_RAFT);
+        toolOrder.add(Material.PALE_OAK_BOAT);
         toolOrder.add(Material.OAK_CHEST_BOAT);
         toolOrder.add(Material.SPRUCE_CHEST_BOAT);
         toolOrder.add(Material.BIRCH_CHEST_BOAT);
@@ -66,6 +67,7 @@ public class CategoryManager {
         toolOrder.add(Material.MANGROVE_CHEST_BOAT);
         toolOrder.add(Material.CHERRY_CHEST_BOAT);
         toolOrder.add(Material.BAMBOO_CHEST_RAFT);
+        toolOrder.add(Material.PALE_OAK_CHEST_BOAT);
 
         toolOrder.add(Material.WOODEN_PICKAXE);
         toolOrder.add(Material.WOODEN_AXE);
@@ -159,6 +161,7 @@ public class CategoryManager {
         }
 
         // Ores
+        oreOrder.add(Material.LEATHER);
         oreOrder.add(Material.SHULKER_SHELL);
         oreOrder.add(Material.NETHER_QUARTZ_ORE);
         oreOrder.add(Material.QUARTZ);
@@ -172,6 +175,7 @@ public class CategoryManager {
         oreOrder.add(Material.LAPIS_BLOCK);
         oreOrder.add(Material.COAL_ORE);
         oreOrder.add(Material.DEEPSLATE_COAL_ORE);
+        oreOrder.add(Material.CHARCOAL);
         oreOrder.add(Material.COAL);
         oreOrder.add(Material.COAL_BLOCK);
         oreOrder.add(Material.COPPER_ORE);
@@ -304,12 +308,73 @@ public class CategoryManager {
         }
 
         // Decor
+        decorativeBlocksOrder.add(Material.OAK_LOG);
+        decorativeBlocksOrder.add(Material.STRIPPED_OAK_LOG);
+        decorativeBlocksOrder.add(Material.OAK_WOOD);
+        decorativeBlocksOrder.add(Material.STRIPPED_OAK_WOOD);
+        decorativeBlocksOrder.add(Material.SPRUCE_LOG);
+        decorativeBlocksOrder.add(Material.STRIPPED_SPRUCE_LOG);
+        decorativeBlocksOrder.add(Material.SPRUCE_WOOD);
+        decorativeBlocksOrder.add(Material.STRIPPED_SPRUCE_WOOD);
+        decorativeBlocksOrder.add(Material.BIRCH_LOG);
+        decorativeBlocksOrder.add(Material.STRIPPED_BIRCH_LOG);
+        decorativeBlocksOrder.add(Material.BIRCH_WOOD);
+        decorativeBlocksOrder.add(Material.STRIPPED_BIRCH_WOOD);
+        decorativeBlocksOrder.add(Material.JUNGLE_LOG);
+        decorativeBlocksOrder.add(Material.STRIPPED_JUNGLE_LOG);
+        decorativeBlocksOrder.add(Material.JUNGLE_WOOD);
+        decorativeBlocksOrder.add(Material.STRIPPED_JUNGLE_WOOD);
+        decorativeBlocksOrder.add(Material.ACACIA_LOG);
+        decorativeBlocksOrder.add(Material.STRIPPED_ACACIA_LOG);
+        decorativeBlocksOrder.add(Material.ACACIA_WOOD);
+        decorativeBlocksOrder.add(Material.STRIPPED_ACACIA_WOOD);
+        decorativeBlocksOrder.add(Material.DARK_OAK_LOG);
+        decorativeBlocksOrder.add(Material.STRIPPED_DARK_OAK_LOG);
+        decorativeBlocksOrder.add(Material.DARK_OAK_WOOD);
+        decorativeBlocksOrder.add(Material.STRIPPED_DARK_OAK_WOOD);
+        decorativeBlocksOrder.add(Material.MANGROVE_LOG);
+        decorativeBlocksOrder.add(Material.STRIPPED_MANGROVE_LOG);
+        decorativeBlocksOrder.add(Material.MANGROVE_WOOD);
+        decorativeBlocksOrder.add(Material.STRIPPED_MANGROVE_WOOD);
+        decorativeBlocksOrder.add(Material.CHERRY_LOG);
+        decorativeBlocksOrder.add(Material.STRIPPED_CHERRY_LOG);
+        decorativeBlocksOrder.add(Material.CHERRY_WOOD);
+        decorativeBlocksOrder.add(Material.STRIPPED_CHERRY_WOOD);
+        decorativeBlocksOrder.add(Material.BAMBOO_BLOCK);
+        decorativeBlocksOrder.add(Material.STRIPPED_BAMBOO_BLOCK);
+        decorativeBlocksOrder.add(Material.CRIMSON_STEM);
+        decorativeBlocksOrder.add(Material.STRIPPED_CRIMSON_STEM);
+        decorativeBlocksOrder.add(Material.CRIMSON_HYPHAE);
+        decorativeBlocksOrder.add(Material.STRIPPED_CRIMSON_HYPHAE);
+        decorativeBlocksOrder.add(Material.WARPED_STEM);
+        decorativeBlocksOrder.add(Material.STRIPPED_WARPED_STEM);
+        decorativeBlocksOrder.add(Material.WARPED_HYPHAE);
+        decorativeBlocksOrder.add(Material.STRIPPED_WARPED_HYPHAE);
+        decorativeBlocksOrder.add(Material.PALE_OAK_LOG);
+        decorativeBlocksOrder.add(Material.STRIPPED_PALE_OAK_LOG);
+        decorativeBlocksOrder.add(Material.PALE_OAK_WOOD);
+        decorativeBlocksOrder.add(Material.STRIPPED_PALE_OAK_WOOD);
+        decorativeBlocksOrder.add(Material.OAK_LEAVES);
+        decorativeBlocksOrder.add(Material.SPRUCE_LEAVES);
+        decorativeBlocksOrder.add(Material.BIRCH_LEAVES);
+        decorativeBlocksOrder.add(Material.JUNGLE_LEAVES);
+        decorativeBlocksOrder.add(Material.ACACIA_LEAVES);
+        decorativeBlocksOrder.add(Material.DARK_OAK_LEAVES);
+        decorativeBlocksOrder.add(Material.MANGROVE_LEAVES);
+        decorativeBlocksOrder.add(Material.CHERRY_LEAVES);
+        decorativeBlocksOrder.add(Material.AZALEA_LEAVES);
+        decorativeBlocksOrder.add(Material.FLOWERING_AZALEA_LEAVES);
         decorativeBlocksOrder.add(Material.OAK_PLANKS);
         decorativeBlocksOrder.add(Material.SPRUCE_PLANKS);
         decorativeBlocksOrder.add(Material.BIRCH_PLANKS);
         decorativeBlocksOrder.add(Material.JUNGLE_PLANKS);
         decorativeBlocksOrder.add(Material.ACACIA_PLANKS);
         decorativeBlocksOrder.add(Material.DARK_OAK_PLANKS);
+        decorativeBlocksOrder.add(Material.MANGROVE_PLANKS);
+        decorativeBlocksOrder.add(Material.CHERRY_PLANKS);
+        decorativeBlocksOrder.add(Material.BAMBOO_PLANKS);
+        decorativeBlocksOrder.add(Material.CRIMSON_PLANKS);
+        decorativeBlocksOrder.add(Material.WARPED_PLANKS);
         decorativeBlocksOrder.add(Material.CRAFTING_TABLE);
         decorativeBlocksOrder.add(Material.LADDER);
         decorativeBlocksOrder.add(Material.OAK_FENCE);
@@ -318,18 +383,33 @@ public class CategoryManager {
         decorativeBlocksOrder.add(Material.JUNGLE_FENCE);
         decorativeBlocksOrder.add(Material.ACACIA_FENCE);
         decorativeBlocksOrder.add(Material.DARK_OAK_FENCE);
+        decorativeBlocksOrder.add(Material.MANGROVE_FENCE);
+        decorativeBlocksOrder.add(Material.CHERRY_FENCE);
+        decorativeBlocksOrder.add(Material.BAMBOO_FENCE);
+        decorativeBlocksOrder.add(Material.CRIMSON_FENCE);
+        decorativeBlocksOrder.add(Material.WARPED_FENCE);
         decorativeBlocksOrder.add(Material.OAK_FENCE_GATE);
         decorativeBlocksOrder.add(Material.SPRUCE_FENCE_GATE);
         decorativeBlocksOrder.add(Material.BIRCH_FENCE_GATE);
         decorativeBlocksOrder.add(Material.JUNGLE_FENCE_GATE);
         decorativeBlocksOrder.add(Material.ACACIA_FENCE_GATE);
         decorativeBlocksOrder.add(Material.DARK_OAK_FENCE_GATE);
+        decorativeBlocksOrder.add(Material.MANGROVE_FENCE_GATE);
+        decorativeBlocksOrder.add(Material.CHERRY_FENCE_GATE);
+        decorativeBlocksOrder.add(Material.BAMBOO_FENCE_GATE);
+        decorativeBlocksOrder.add(Material.CRIMSON_FENCE_GATE);
+        decorativeBlocksOrder.add(Material.WARPED_FENCE_GATE);
         decorativeBlocksOrder.add(Material.OAK_STAIRS);
         decorativeBlocksOrder.add(Material.SPRUCE_STAIRS);
         decorativeBlocksOrder.add(Material.BIRCH_STAIRS);
         decorativeBlocksOrder.add(Material.JUNGLE_STAIRS);
         decorativeBlocksOrder.add(Material.ACACIA_STAIRS);
         decorativeBlocksOrder.add(Material.DARK_OAK_STAIRS);
+        decorativeBlocksOrder.add(Material.MANGROVE_STAIRS);
+        decorativeBlocksOrder.add(Material.CHERRY_STAIRS);
+        decorativeBlocksOrder.add(Material.BAMBOO_STAIRS);
+        decorativeBlocksOrder.add(Material.CRIMSON_STAIRS);
+        decorativeBlocksOrder.add(Material.WARPED_STAIRS);
         decorativeBlocksOrder.add(Material.STONE_BRICK_STAIRS);
         decorativeBlocksOrder.add(Material.COBBLESTONE_STAIRS);
         decorativeBlocksOrder.add(Material.SANDSTONE_STAIRS);
@@ -342,6 +422,11 @@ public class CategoryManager {
         decorativeBlocksOrder.add(Material.JUNGLE_SLAB);
         decorativeBlocksOrder.add(Material.ACACIA_SLAB);
         decorativeBlocksOrder.add(Material.DARK_OAK_SLAB);
+        decorativeBlocksOrder.add(Material.MANGROVE_SLAB);
+        decorativeBlocksOrder.add(Material.CHERRY_SLAB);
+        decorativeBlocksOrder.add(Material.BAMBOO_SLAB);
+        decorativeBlocksOrder.add(Material.CRIMSON_SLAB);
+        decorativeBlocksOrder.add(Material.WARPED_SLAB);
         decorativeBlocksOrder.add(Material.STONE_BRICK_SLAB);
         decorativeBlocksOrder.add(Material.COBBLESTONE_SLAB);
         decorativeBlocksOrder.add(Material.SANDSTONE_SLAB);
@@ -545,6 +630,7 @@ public class CategoryManager {
         }
 
         // EnchantedBooks
+        enchantedBooksOrder.add(Material.BOOK);
         enchantedBooksOrder.add(Material.ENCHANTED_BOOK);
 
         for (Material enchantedBook : enchantedBooksOrder) {
