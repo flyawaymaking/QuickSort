@@ -1,24 +1,24 @@
 package com.flyaway.quicksort;
 
-import java.util.*;
-
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.inventory.meta.EnchantmentStorageMeta;
+
+import java.util.*;
 
 public class SortManager {
     private final QuickSort plugin;
     private final CategoryManager categoryManager;
+    private final ItemStackManager stackManager;
     private final Map<UUID, Long> sortCooldowns = new HashMap<>();
     private static final List<Material> EMPTY_ORDER = Collections.emptyList();
 
-    public SortManager(QuickSort plugin, CategoryManager categoryManager) {
+    public SortManager(QuickSort plugin) {
         this.plugin = plugin;
-        this.categoryManager = categoryManager;
+        this.categoryManager = plugin.getCategoryManager();
+        this.stackManager = new ItemStackManager();
     }
 
     public boolean canSort(Player player) {
@@ -58,13 +58,8 @@ public class SortManager {
             mainInventory[i - 9] = playerInventory.getItem(i);
         }
 
-        // Sort the main inventory
-        List<ItemStack> itemsList = new ArrayList<>();
-        for (ItemStack item : mainInventory) {
-            if (item != null) {
-                itemsList.add(item);
-            }
-        }
+        // Собираем все предметы и объединяем стаки
+        List<ItemStack> itemsList = stackManager.combineStacks(mainInventory);
 
         // Clear the main inventory slots
         for (int i = 9; i < 36; i++) {
@@ -78,13 +73,9 @@ public class SortManager {
 
     private void sortContainerInventory(Inventory inventory) {
         ItemStack[] contents = inventory.getContents();
-        List<ItemStack> itemsList = new ArrayList<>();
-
-        for (ItemStack item : contents) {
-            if (item != null) {
-                itemsList.add(item);
-            }
-        }
+        
+        // Собираем все предметы и объединяем стаки
+        List<ItemStack> itemsList = stackManager.combineStacks(contents);
 
         inventory.clear();
         Map<Category, List<ItemStack>> categorizedItems = categorizeItems(itemsList);
@@ -179,8 +170,8 @@ public class SortManager {
     }
 
     private int compareByEnchantments(ItemStack item1, ItemStack item2) {
-        Map<org.bukkit.enchantments.Enchantment, Integer> enchants1 = getAllEnchantments(item1);
-        Map<org.bukkit.enchantments.Enchantment, Integer> enchants2 = getAllEnchantments(item2);
+        Map<org.bukkit.enchantments.Enchantment, Integer> enchants1 = ItemStackManager.getAllEnchantments(item1);
+        Map<org.bukkit.enchantments.Enchantment, Integer> enchants2 = ItemStackManager.getAllEnchantments(item2);
 
         // Сначала по количеству зачарований (убывание)
         int enchantCount1 = enchants1.size();
@@ -210,23 +201,9 @@ public class SortManager {
     /**
      * Возвращает зачарования для любого предмета, включая зачарованные книги.
      */
-    private Map<org.bukkit.enchantments.Enchantment, Integer> getAllEnchantments(ItemStack item) {
-        if (item == null) {
-            return Collections.emptyMap();
-        }
-
-        ItemMeta meta = item.getItemMeta();
-        if (meta == null) {
-            return Collections.emptyMap();
-        }
-
-        if (meta instanceof EnchantmentStorageMeta storageMeta) {
-            return storageMeta.getStoredEnchants();
-        }
-
-        return meta.getEnchants();
+    private static Map<org.bukkit.enchantments.Enchantment, Integer> getAllEnchantments(ItemStack item) {
+        return ItemStackManager.getAllEnchantments(item);
     }
-
 
     private void sortPotions(List<ItemStack> potions, List<Material> order) {
         potions.sort((item1, item2) -> {

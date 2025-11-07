@@ -1,12 +1,22 @@
-name: QuickSort
-version: 1.1.1
-main: com.flyaway.quicksort.QuickSort
+name: ${name}
+version: ${version}
+main: ${group}.${name}
 api-version: 1.21
 description: Плагин для сортировки инвентаря по ПКМ+SHIFT
 author: FlyAwayMaking
 website: https://github.com/flyawaymaking
 
+commands:
+  quicksort:
+    description: Перезагрузка конфига
+    usage: /<command> <reload>
+    permission: quicksort.reload
+
+
 permissions:
   quicksort.sort:
     description: Право сортировки инвентаря
     default: true
+  quicksort.reload:
+    description: Разрешение на перезагрузку конфига
+    default: op

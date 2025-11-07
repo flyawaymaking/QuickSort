@@ -23,9 +23,9 @@ public class EventListener implements Listener {
     private final QuickSort plugin;
     private final SortManager sortManager;
 
-    public EventListener(QuickSort plugin, SortManager sortManager) {
+    public EventListener(QuickSort plugin) {
         this.plugin = plugin;
-        this.sortManager = sortManager;
+        this.sortManager = plugin.getSortManager();
     }
 
     @EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)
