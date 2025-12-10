@@ -30,57 +30,45 @@ public class EventListener implements Listener {
 
     @EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)
     public void onInventoryClick(InventoryClickEvent event) {
-        // Only handle player clicks
-        if (!(event.getWhoClicked() instanceof Player)) {
+        if (!(event.getWhoClicked() instanceof Player player)) {
             return;
         }
 
-        Player player = (Player) event.getWhoClicked();
-
-        // Check if it's Shift+Right-Click
         if (event.getClick() != ClickType.SHIFT_RIGHT) {
             return;
         }
 
-        // Check if clicked on empty slot (air)
         ItemStack clickedItem = event.getCurrentItem();
         if (clickedItem != null && clickedItem.getType() != Material.AIR) {
             return;
         }
 
-        // Check permission
         if (!sortManager.canSort(player)) {
             return;
         }
 
-        // Check cooldown
         if (sortManager.isOnCooldown(player)) {
             return;
         }
 
-        // Determine which inventory to sort
         Inventory targetInventory = null;
 
-        // Check if clicked in player inventory
         if (event.getClickedInventory() != null &&
             event.getClickedInventory().getType() == InventoryType.PLAYER) {
             targetInventory = player.getInventory();
         }
-        // Check if clicked in an allowed container
+
         else if (event.getClickedInventory() != null &&
                  isAllowedContainer(event.getClickedInventory())) {
             targetInventory = event.getClickedInventory();
         }
 
-        // If no valid inventory found, return
         if (targetInventory == null) {
             return;
         }
 
-        // Cancel the click event
         event.setCancelled(true);
 
-        // Perform the sorting
         sortManager.sortInventory(targetInventory);
         sortManager.setCooldown(player);
         player.sendMessage("§aИнвентарь отсортирован!");
@@ -101,11 +89,7 @@ public class EventListener implements Listener {
         }
 
         InventoryType type = inventory.getType();
-        if (type == InventoryType.ENDER_CHEST
-            || type == InventoryType.SHULKER_BOX) {
-            return true;
-        }
-
-        return false;
+        return type == InventoryType.ENDER_CHEST
+                || type == InventoryType.SHULKER_BOX;
     }
 }

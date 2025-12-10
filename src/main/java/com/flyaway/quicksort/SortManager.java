@@ -1,10 +1,13 @@
 package com.flyaway.quicksort;
 
 import org.bukkit.Material;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
+import org.bukkit.inventory.meta.PotionMeta;
+import org.bukkit.potion.PotionType;
 
 import java.util.*;
 
@@ -27,9 +30,6 @@ public class SortManager {
 
     public boolean isOnCooldown(Player player) {
         long cooldownTime = 1000L; // 1 second cooldown
-        if (cooldownTime <= 0L) {
-            return false;
-        }
 
         Long lastSort = sortCooldowns.get(player.getUniqueId());
         if (lastSort == null) {
@@ -147,9 +147,9 @@ public class SortManager {
                 // Если порядок одинаковый, продолжаем сравнение
             }
             // Если один в порядке, а другой нет - тот что в порядке идет первым
-            else if (index1 != -1 && index2 == -1) {
+            else if (index1 != -1) {
                 return -1;
-            } else if (index1 == -1 && index2 != -1) {
+            } else if (index2 != -1) {
                 return 1;
             }
             // Если оба не в порядке или порядок одинаковый - сравниваем дальше
@@ -170,8 +170,8 @@ public class SortManager {
     }
 
     private int compareByEnchantments(ItemStack item1, ItemStack item2) {
-        Map<org.bukkit.enchantments.Enchantment, Integer> enchants1 = ItemStackManager.getAllEnchantments(item1);
-        Map<org.bukkit.enchantments.Enchantment, Integer> enchants2 = ItemStackManager.getAllEnchantments(item2);
+        Map<Enchantment, Integer> enchants1 = ItemStackManager.getAllEnchantments(item1);
+        Map<Enchantment, Integer> enchants2 = ItemStackManager.getAllEnchantments(item2);
 
         // Сначала по количеству зачарований (убывание)
         int enchantCount1 = enchants1.size();
@@ -181,9 +181,9 @@ public class SortManager {
         }
 
         // Если количество одинаковое — сравниваем по названию и уровню первого зачарования
-        if (enchantCount1 > 0 && enchantCount2 > 0) {
-            Map.Entry<org.bukkit.enchantments.Enchantment, Integer> enchant1 = enchants1.entrySet().iterator().next();
-            Map.Entry<org.bukkit.enchantments.Enchantment, Integer> enchant2 = enchants2.entrySet().iterator().next();
+        if (enchantCount1 > 0) {
+            Map.Entry<Enchantment, Integer> enchant1 = enchants1.entrySet().iterator().next();
+            Map.Entry<Enchantment, Integer> enchant2 = enchants2.entrySet().iterator().next();
 
             String name1 = enchant1.getKey().getKey().getKey();
             String name2 = enchant2.getKey().getKey().getKey();
@@ -196,13 +196,6 @@ public class SortManager {
         }
 
         return 0;
-    }
-
-    /**
-     * Возвращает зачарования для любого предмета, включая зачарованные книги.
-     */
-    private static Map<org.bukkit.enchantments.Enchantment, Integer> getAllEnchantments(ItemStack item) {
-        return ItemStackManager.getAllEnchantments(item);
     }
 
     private void sortPotions(List<ItemStack> potions, List<Material> order) {
@@ -219,9 +212,9 @@ public class SortManager {
                 // Если порядок одинаковый, продолжаем сравнение
             }
             // Если одно в порядке, а другое нет - то что в порядке идет первым
-            else if (index1 != -1 && index2 == -1) {
+            else if (index1 != -1) {
                 return -1;
-            } else if (index1 == -1 && index2 != -1) {
+            } else if (index2 != -1) {
                 return 1;
             }
             // Если оба не в порядке или порядок одинаковый - сравниваем дальше
@@ -263,7 +256,7 @@ public class SortManager {
     }
 
     private boolean hasPotionEffect(ItemStack potion) {
-        if (!(potion.getItemMeta() instanceof org.bukkit.inventory.meta.PotionMeta meta)) {
+        if (!(potion.getItemMeta() instanceof PotionMeta meta)) {
             return false;
         }
 
@@ -272,33 +265,26 @@ public class SortManager {
             return true;
         }
 
-        // Новый способ проверки базового типа зелья
-        org.bukkit.potion.PotionType potionType = meta.getBasePotionType();
+        PotionType potionType = meta.getBasePotionType();
         if (potionType == null) return false;
 
         // Безэффектные типы — всегда false
         return !isEffectlessPotion(potionType);
     }
 
-    private boolean isEffectlessPotion(org.bukkit.potion.PotionType potionType) {
-        switch (potionType) {
-            case WATER:
-            case MUNDANE:
-            case THICK:
-            case AWKWARD:
-                return true;
-            default:
-                return false;
-        }
+    private boolean isEffectlessPotion(PotionType potionType) {
+        return switch (potionType) {
+            case WATER, MUNDANE, THICK, AWKWARD -> true;
+            default -> false;
+        };
     }
 
     private String getPotionEffectName(ItemStack potion) {
-        if (potion.getItemMeta() instanceof org.bukkit.inventory.meta.PotionMeta meta) {
+        if (potion.getItemMeta() instanceof PotionMeta meta) {
             if (meta.hasCustomEffects()) {
-                return meta.getCustomEffects().get(0).getType().getName();
+                return meta.getCustomEffects().getFirst().getType().getKey().asString();
             }
-            // Новый способ получения типа зелья
-            org.bukkit.potion.PotionType potionType = meta.getBasePotionType();
+            PotionType potionType = meta.getBasePotionType();
             if (potionType != null) {
                 return potionType.name();
             }
@@ -307,20 +293,18 @@ public class SortManager {
     }
 
     private int getPotionLevel(ItemStack potion) {
-        if (potion.getItemMeta() instanceof org.bukkit.inventory.meta.PotionMeta) {
-            org.bukkit.inventory.meta.PotionMeta meta = (org.bukkit.inventory.meta.PotionMeta) potion.getItemMeta();
+        if (potion.getItemMeta() instanceof PotionMeta meta) {
             if (meta.hasCustomEffects()) {
-                return meta.getCustomEffects().get(0).getAmplifier() + 1;
+                return meta.getCustomEffects().getFirst().getAmplifier() + 1;
             }
         }
         return 1;
     }
 
     private int getPotionDuration(ItemStack potion) {
-        if (potion.getItemMeta() instanceof org.bukkit.inventory.meta.PotionMeta) {
-            org.bukkit.inventory.meta.PotionMeta meta = (org.bukkit.inventory.meta.PotionMeta) potion.getItemMeta();
+        if (potion.getItemMeta() instanceof PotionMeta meta) {
             if (meta.hasCustomEffects()) {
-                return meta.getCustomEffects().get(0).getDuration();
+                return meta.getCustomEffects().getFirst().getDuration();
             }
         }
         return 0;

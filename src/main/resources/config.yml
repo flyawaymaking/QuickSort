@@ -52,6 +52,10 @@ categories:
     - STONE_AXE
     - STONE_SHOVEL
     - STONE_HOE
+    - COPPER_PICKAXE
+    - COPPER_AXE
+    - COPPER_SHOVEL
+    - COPPER_HOE
     - IRON_PICKAXE
     - IRON_AXE
     - IRON_SHOVEL
@@ -80,6 +84,7 @@ categories:
     - SHIELD
     - WOODEN_SWORD
     - STONE_SWORD
+    - COPPER_SWORD
     - IRON_SWORD
     - GOLDEN_SWORD
     - DIAMOND_SWORD
@@ -92,6 +97,7 @@ categories:
 
   armor:
     - LEATHER_HORSE_ARMOR
+    - COPPER_HORSE_ARMOR
     - IRON_HORSE_ARMOR
     - GOLDEN_HORSE_ARMOR
     - DIAMOND_HORSE_ARMOR
@@ -105,6 +111,10 @@ categories:
     - CHAINMAIL_CHESTPLATE
     - CHAINMAIL_LEGGINGS
     - CHAINMAIL_BOOTS
+    - COPPER_HELMET
+    - COPPER_CHESTPLATE
+    - COPPER_LEGGINGS
+    - COPPER_BOOTS
     - IRON_HELMET
     - IRON_CHESTPLATE
     - IRON_LEGGINGS
@@ -144,6 +154,7 @@ categories:
     - COPPER_ORE
     - DEEPSLATE_COPPER_ORE
     - RAW_COPPER
+    - COPPER_NUGGET
     - COPPER_INGOT
     - COPPER_BLOCK
     - IRON_ORE
@@ -333,6 +344,7 @@ categories:
     - ITEM_FRAME
     - PAINTING
     - CHEST
+    - COPPER_CHEST
     - TRAPPED_CHEST
     - ENDER_CHEST
     - SHULKER_BOX
