@@ -71,7 +71,7 @@ public class EventListener implements Listener {
 
         sortManager.sortInventory(targetInventory);
         sortManager.setCooldown(player);
-        player.sendMessage("§aИнвентарь отсортирован!");
+        plugin.sendMessage(player, "sorted");
     }
 
     private boolean isAllowedContainer(Inventory inventory) {

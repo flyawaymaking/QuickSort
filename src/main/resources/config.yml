@@ -1,6 +1,12 @@
-# QuickSort - Конфигурация категорий сортировки
-# Все материалы должны быть в верхнем регистре (например: STONE, DIAMOND_SWORD)
+# QuickSort
+messages:
+  sorted: "<green>Инвентарь отсортирован!"
+  players-only: "<red>Эта команда только для игроков!"
+  no-permissions: "<red>У вас нет прав для использования этого!"
+  reloaded: "<green>Конфиг QuickSort перезагружен!"
 
+# Конфигурация категорий сортировки
+# Все материалы должны быть в верхнем регистре (например: STONE, DIAMOND_SWORD)
 categories:
   tools:
     - BUCKET

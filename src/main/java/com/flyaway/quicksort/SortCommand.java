@@ -15,18 +15,18 @@ public class SortCommand implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (!(sender instanceof Player player)) {
-            sender.sendMessage("§cЭта команда только для игроков!");
+            plugin.sendMessage(sender, "players-only");
             return true;
         }
 
         if (args.length > 0 && args[0].equalsIgnoreCase("reload")) {
             if (!player.hasPermission("quicksort.reload")) {
-                player.sendMessage("§cУ вас нет прав для перезагрузки конфига!");
+                plugin.sendMessage(player, "no-permissions");
                 return true;
             }
 
             plugin.reloadConfig();
-            player.sendMessage("§aКонфиг QuickSort перезагружен!");
+            plugin.sendMessage(player, "reloaded");
             return true;
         }
 

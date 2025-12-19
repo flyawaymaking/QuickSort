@@ -1,11 +1,14 @@
 package com.flyaway.quicksort;
 
+import net.kyori.adventure.text.minimessage.MiniMessage;
+import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class QuickSort extends JavaPlugin {
     private CategoryManager categoryManager;
     private SortManager sortManager;
     private EventListener eventListener;
+    private final MiniMessage miniMessage = MiniMessage.miniMessage();
 
     @Override
     public void onEnable() {
@@ -38,5 +41,11 @@ public class QuickSort extends JavaPlugin {
 
     public SortManager getSortManager() {
         return sortManager;
+    }
+
+    public void sendMessage(CommandSender sender, String key) {
+        String message = getConfig().getString("messages." + key, "<red>Message not found: " + key);
+        if (message.isEmpty()) return;
+        sender.sendMessage(miniMessage.deserialize(message));
     }
 }
