@@ -1,7 +1,10 @@
 package com.flyaway.quicksort;
 
 import org.bukkit.Material;
+import org.bukkit.entity.ChestBoat;
+import org.bukkit.entity.ChestedHorse;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.minecart.HopperMinecart;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -77,9 +80,11 @@ public class EventListener implements Listener {
     private boolean isAllowedContainer(Inventory inventory) {
         InventoryHolder holder = inventory.getHolder();
 
-        // Разрешенные контейнеры
         if (holder instanceof Chest ||
             holder instanceof DoubleChest ||
+            holder instanceof ChestedHorse ||
+            holder instanceof HopperMinecart ||
+            holder instanceof ChestBoat ||
             holder instanceof Barrel ||
             holder instanceof ShulkerBox ||
             holder instanceof Hopper ||
@@ -89,7 +94,7 @@ public class EventListener implements Listener {
         }
 
         InventoryType type = inventory.getType();
-        return type == InventoryType.ENDER_CHEST
+        return type == InventoryType.ENDER_CHEST || type == InventoryType.CHEST || type == InventoryType.BARREL
                 || type == InventoryType.SHULKER_BOX;
     }
 }
